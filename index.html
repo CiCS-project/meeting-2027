@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CiCS Meeting – 27 January 2027</title>
+<meta name="description" content="CiCS meeting, Wednesday 27 January 2027, 12:30–17:30, Vrije Universiteit Amsterdam.">
+<style>
+  :root {
+    --fg: #111827; --muted: #6b7280; --text: #374151;
+    --accent: #2563eb; --accent-dark: #1d4ed8;
+    --bg: #ffffff; --soft: #f8fafc; --line: #e5e7eb; --line-soft: #f0f0f0;
+    --reg-bg: #eff6ff; --reg-line: #dbeafe;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #f3f4f6; --muted: #9ca3af; --text: #d1d5db;
+      --accent: #60a5fa; --accent-dark: #3b82f6;
+      --bg: #0f172a; --soft: #1e293b; --line: #334155; --line-soft: #1e293b;
+      --reg-bg: #172554; --reg-line: #1e3a8a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  main { max-width: 52rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+  h1 { color: var(--fg); font-size: 2rem; margin: 0 0 0.25rem; }
+  .subtitle { color: var(--muted); margin: 0 0 2rem; font-size: 1.1rem; }
+  a { color: var(--accent); }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+    margin: 0 0 2rem; padding: 1rem 1.25rem;
+    background: var(--soft); border-left: 4px solid var(--accent); border-radius: 4px;
+  }
+  .meta strong { color: var(--fg); }
+  .register {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem;
+    margin: -1rem 0 2rem; padding: 1rem 1.25rem;
+    border: 1px solid var(--reg-line); border-radius: 4px; background: var(--reg-bg);
+  }
+  .register p { margin: 0; flex: 1 1 18rem; font-size: 0.95rem; }
+  a.btn {
+    display: inline-block; padding: 0.55rem 1.25rem; background: var(--accent);
+    color: #fff; font-weight: 600; border-radius: 4px; text-decoration: none; white-space: nowrap;
+  }
+  a.btn:hover { background: var(--accent-dark); }
+  h2 { color: var(--fg); font-size: 1.4rem; margin: 2.5rem 0 0.5rem; }
+  h3.session {
+    margin: 2rem 0 0.75rem; font-size: 1.1rem; color: var(--accent);
+    border-bottom: 2px solid var(--line); padding-bottom: 0.35rem;
+  }
+  .item {
+    display: grid; grid-template-columns: 9.5rem 1fr; gap: 0.25rem 1rem;
+    padding: 0.75rem 0; border-bottom: 1px solid var(--line-soft);
+  }
+  .item:last-child { border-bottom: none; }
+  .time { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.95rem; white-space: nowrap; }
+  .title { font-weight: 700; color: var(--fg); display: block; }
+  .detail { font-size: 0.95rem; }
+  .break .title { font-weight: 500; color: var(--muted); font-style: italic; }
+  footer { margin-top: 3rem; color: var(--muted); font-size: 0.85rem; }
+  @media (max-width: 600px) { .item { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>CiCS Meeting</h1>
+  <p class="subtitle">An afternoon of highlights and discussion with all CiCS institutes</p>
+
+  <div class="meta">
+    <div><strong>Date:</strong> Wednesday, 27 January 2027</div>
+    <div><strong>Time:</strong> 12:30 – 17:30, followed by drinks</div>
+    <div><strong>Location:</strong> Vrije Universiteit Amsterdam (room to be announced),
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=Vrije+Universiteit+Amsterdam+De+Boelelaan+1105">De Boelelaan 1105, Amsterdam</a></div>
+  </div>
+
+  <div class="register">
+    <p><strong>Registration:</strong> the meeting is free of charge, but registration is mandatory so that we can plan the catering. Please register only if you intend to come.</p>
+    <a class="btn" href="https://hyperelliptic.org/tanja/c896aa4b90aee4a9a69d5b059a0570451b53a4c9-reg.html" target="_blank" rel="noopener">Register</a>
+  </div>
+
+  <h2>Program</h2>
+
+  <h3 class="session">Opening</h3>
+  <div class="item">
+    <div class="time">12:30 – 12:40</div>
+    <div><span class="title">Welcome and announcement of the RSP</span>
+      <span class="detail">Goals of the afternoon; introduction of the RSP and a call for colleagues interested in taking on a role.</span></div>
+  </div>
+
+  <h3 class="session">Session 1: Institute highlights</h3>
+  <div class="item">
+    <div class="time">12:40 – 13:20</div>
+    <div><span class="title">Institute 1: highlights</span><span class="detail">Speaker(s) TBA</span></div>
+  </div>
+  <div class="item">
+    <div class="time">13:20 – 14:00</div>
+    <div><span class="title">Institute 2: highlights</span><span class="detail">Speaker(s) TBA</span></div>
+  </div>
+  <div class="item break">
+    <div class="time">14:00 – 14:20</div>
+    <div><span class="title">Coffee break</span></div>
+  </div>
+
+  <h3 class="session">Session 2: Institute highlights</h3>
+  <div class="item">
+    <div class="time">14:20 – 15:00</div>
+    <div><span class="title">Institute 3: highlights</span><span class="detail">Speaker(s) TBA</span></div>
+  </div>
+  <div class="item">
+    <div class="time">15:00 – 15:40</div>
+    <div><span class="title">Institute 4: highlights</span><span class="detail">Speaker(s) TBA</span></div>
+  </div>
+  <div class="item break">
+    <div class="time">15:40 – 16:10</div>
+    <div><span class="title">Coffee break and poster voting</span>
+      <span class="detail">Place your notes on the posters for the interactive session.</span></div>
+  </div>
+
+  <h3 class="session">Session 3: Highlights and the future of CiCS</h3>
+  <div class="item">
+    <div class="time">16:10 – 16:50</div>
+    <div><span class="title">Institute 5: highlights</span><span class="detail">Speaker(s) TBA</span></div>
+  </div>
+  <div class="item">
+    <div class="time">16:50 – 17:20</div>
+    <div><span class="title">Interactive session: what are the most important problems for CiCS?</span>
+      <span class="detail">Discussion of the poster voting.</span></div>
+  </div>
+  <div class="item">
+    <div class="time">17:20 – 17:30</div>
+    <div><span class="title">What do CiCS members need to be successful?</span>
+      <span class="detail">Ideas for shared support, such as training or a regular seminar; wrap-up.</span></div>
+  </div>
+  <div class="item break">
+    <div class="time">17:30</div>
+    <div><span class="title">Drinks</span></div>
+  </div>
+
+  <footer>CiCS · 27 January 2027</footer>
+</main>
+</body>
+</html>
