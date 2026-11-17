@@ -4,7 +4,8 @@ Website for the meeting of **Challenges in Cyber Security (CiCS)**, an NWO Gravi
 
 - **Date:** Wednesday, 27 January 2027, 12:30 – 17:30, followed by drinks
 - **Location:** Vrije Universiteit Amsterdam (room to be announced)
-- **Registration:** <https://hyperelliptic.org/tanja/c896aa4b90aee4a9a69d5b059a0570451b53a4c9-reg.html>
+- **Registration:** <https://cryptpad.fr/form/#/2/form/view/d-FrQ-Tqb-tQkW5K+PJRydmjYejnx3B9NAYOYdB1E+o/>
+- **Registration responses:** CryptPad form owned by the organisers' CryptPad account (cryptpad.fr, end-to-end encrypted). Export via the form's *Responses* view → export as CSV; delete the form after the meeting.
 - **Live page:** <https://cics-project.github.io/meeting-2027/>
 
 ## Editing
