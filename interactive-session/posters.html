@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CiCS quadrant posters</title>
+<!--
+  Printable quadrant posters for the CiCS meeting, 27 January 2027.
+  Edit the POSTERS list below (keep it in sync with questions.md), open in a browser,
+  then Print -> paper size A3, landscape, margins "none", background graphics on.
+  Each poster is one page; a print shop can scale A3 up to A2/A1.
+-->
+<style>
+  @page { size: A3 landscape; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; color: #111; background: #ddd; }
+  .poster {
+    width: 420mm; height: 297mm; background: #fff; margin: 10mm auto;
+    padding: 14mm 18mm 12mm; display: flex; flex-direction: column;
+    page-break-after: always; break-after: page; overflow: hidden;
+  }
+  .head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13pt; color: #555; }
+  .q { font-size: 34pt; font-weight: 700; line-height: 1.15; margin: 6mm 0 8mm; }
+  .q.blank { color: #bbb; font-weight: 400; border-bottom: 1px dashed #bbb; padding-bottom: 14mm; }
+  .chart { flex: 1; display: grid; grid-template-columns: 14mm 1fr; grid-template-rows: 1fr 12mm; }
+  .ylab { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-size: 18pt; font-weight: 600; }
+  .xlab { grid-column: 2; text-align: center; font-size: 18pt; font-weight: 600; padding-top: 2mm; }
+  .grid { position: relative; border-left: 1.2mm solid #111; border-bottom: 1.2mm solid #111;
+          display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .grid > div { border: 0.4mm dashed #aaa; position: relative; }
+  .grid > div span { position: absolute; font-size: 12pt; color: #999; padding: 3mm 4mm; }
+  .tl span { top: 0; left: 0; } .tr span { top: 0; right: 0; }
+  .bl span { bottom: 0; left: 0; } .br span { bottom: 0; right: 0; }
+  .arrow-x { position: absolute; right: -4mm; bottom: -3.2mm; font-size: 16pt; }
+  .arrow-y { position: absolute; left: -3.6mm; top: -6mm; font-size: 16pt; }
+  .foot { font-size: 12pt; color: #555; margin-top: 3mm; }
+  /* nine-challenges overview poster */
+  .nine { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto repeat(3, 1fr); gap: 3mm; }
+  .nine .ph { font-size: 20pt; font-weight: 700; text-align: center; padding: 2mm; background: #eee; }
+  .nine .cell { border: 0.6mm solid #111; padding: 4mm; font-size: 18pt; font-weight: 600; }
+  @media print { body { background: none; } .poster { margin: 0; } }
+</style>
+</head>
+<body>
+<div id="out"></div>
+<script>
+// Axes: "A" = Impact x Feasibility, "B" = Importance for CiCS x My own involvement.
+const AXES = {
+  A: { x: "Feasibility", y: "Impact",
+       q: ["High impact, hard", "High impact, doable", "Low impact, hard", "Low impact, doable"] },
+  B: { x: "I would work on this", y: "Importance for CiCS",
+       q: ["Important, not for me", "Important, count me in", "Less important, not for me", "Less important, but I'm interested"] }
+};
+const POSTERS = [
+  { q: "Should CiCS develop a joint proof-of-concept around privacy-preserving medical data analysis?", axes: "A" },
+  { q: "Should CiCS build a joint demonstrator combining all three pillars (e.g. verified, side-channel-hardened, post-quantum)?", axes: "A" },
+  { q: "Security of and with AI/ML: attacks on ML, ML for finding bugs and side channels, AI agents", axes: "B" },
+  { q: "Long-term and post-quantum security, including migration", axes: "B" },
+  { q: "Verification: formally verified crypto, software and hardware/software co-verification", axes: "B" },
+  { q: "Software security on vulnerable hardware: microarchitectural, side-channel and fault attacks", axes: "B" },
+  { q: "Should the CWI research semester (spring 2028) focus on one or two of the nine challenges?", axes: "A" },
+  { q: "Should CiCS fund 1–4 week exchange visits of PhD students and postdocs between the institutes?", axes: "A" },
+  { q: null, axes: "A" }, // blank poster for questions raised on the day
+  { q: null, axes: "B" },
+  { nine: true }
+];
+const NINE = [
+  ["Cryptography", "Software security", "Physical security"],
+  ["Breaking performance barriers", "Software security on vulnerable hardware", "Efficient hardware architectures"],
+  ["Cryptography for long-term security", "Verifying correctness of software", "Constructive use of physical realities"],
+  ["Complex cryptographic systems", "Machine learning for security and insecurity", "Defenses against side-channel attacks"]
+];
+const esc = s => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const head = n => `<div class="head"><span>CiCS meeting · 27 January 2027 · VU Amsterdam</span><span>Poster ${n}</span></div>`;
+const html = POSTERS.map((p, i) => {
+  const n = i + 1;
+  if (p.nine) {
+    const cells = NINE.slice(1).flat().map(t => `<div class="cell">${esc(t)}</div>`).join("");
+    return `<section class="poster">${head(n)}
+      <div class="q">Which core challenge is closest to your own work?</div>
+      <div class="nine">${NINE[0].map(t => `<div class="ph">${esc(t)}</div>`).join("")}${cells}</div>
+      <div class="foot">Place one note with your name on the challenge closest to your work. Afterwards: find someone from another institute on the same challenge.</div></section>`;
+  }
+  const a = AXES[p.axes];
+  const q = p.q ? `<div class="q">${esc(p.q)}</div>` : `<div class="q blank">Question:</div>`;
+  return `<section class="poster">${head(n)}${q}
+    <div class="chart">
+      <div class="ylab">${a.y} →</div>
+      <div class="grid">
+        <div class="tl"><span>${a.q[0]}</span></div><div class="tr"><span>${a.q[1]}</span></div>
+        <div class="bl"><span>${a.q[2]}</span></div><div class="br"><span>${a.q[3]}</span></div>
+      </div>
+      <div class="xlab">${a.x} →</div>
+    </div>
+    <div class="foot">One sticky note per person, with your name. Add a short comment if you like. Place your note during the coffee break, before 14:50.</div></section>`;
+}).join("");
+document.getElementById("out").innerHTML = html;
+</script>
+</body>
+</html>

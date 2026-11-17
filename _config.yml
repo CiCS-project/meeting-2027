@@ -19,3 +19,4 @@ url: "https://cics-project.github.io"
 
 exclude:
   - README.md
+  - interactive-session
