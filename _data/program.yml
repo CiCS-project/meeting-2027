@@ -6,42 +6,43 @@
   items:
     - time: "12:30 – 12:50"
       title: "Welcome, introduction and overview of CiCS"
-      detail: "Tanja Lange. Goals of the afternoon; introduction and announcements."
+      detail: "Tanja Lange (TU/e). Goals of the afternoon; introduction and announcements."
     - time: "12:50 – 13:15"
       title: "Updates from the PIs"
-      detail: "4 × 5 minutes: what has happened so far at each institute. Speakers TBA."
+      detail: "5 minutes each on what has happened so far: Lejla Batina (Radboud University), Herbert Bos (VU Amsterdam), Marten van Dijk (CWI), Christian Schaffner (University of Amsterdam)."
 
 - session: "Getting to know each other"
   items:
-    - time: "13:15 – 14:00"
+    - time: "13:15 – 14:30"
       title: "Speed meeting"
       detail: "Short rounds of about 5 minutes in rotating pairs across institutes and career stages, each with a prompt (e.g. your research in one sentence, a problem you would like help with)."
-    - time: "14:00 – 14:20"
-      title: "Coffee break"
+    - time: "14:30 – 14:50"
+      title: "Coffee break and quadrant voting"
+      detail: "Place your notes on the posters for the interactive session."
       break: true
 
-- session: "Institute highlights"
+- session: "CiCS priorities"
   items:
-    - time: "14:20 – 15:40"
-      title: "Highlights from the five institutes"
-      detail: "5 × 15 minutes, ideally presented by PhD students and postdocs. Speakers TBA."
-    - time: "15:40 – 16:05"
-      title: "Coffee break, networking and quadrant voting"
-      detail: "Breakouts in smaller groups to identify new connections; place your notes on the posters for the interactive session."
-      break: true
-
-- session: "The future of CiCS"
-  items:
-    - time: "16:05 – 16:45"
+    - time: "14:50 – 16:00"
       title: "Interactive session: what are the most important problems for CiCS?"
-      detail: "Discussion of the quadrant posters."
-    - time: "16:45 – 17:05"
+      detail: "Discussion of the quadrant posters, then small groups dig into the most promising questions."
+    - time: "16:00 – 16:20"
+      title: "Coffee break and networking"
+      detail: "Breakouts in smaller groups to identify new connections."
+      break: true
+    - time: "16:20 – 16:50"
+      title: "CiCS priorities: report back"
+      detail: "Groups present their conclusions; agree on concrete next steps."
+
+- session: "Working together"
+  items:
+    - time: "16:50 – 17:10"
       title: "What do CiCS members need to be successful?"
       detail: "Ideas for shared support, such as training (e.g. “AI Agents in Practice”) or a regular bimonthly seminar."
-    - time: "17:05 – 17:15"
+    - time: "17:10 – 17:20"
       title: "Announcement of the RSP"
       detail: "Call for colleagues interested in taking on a role."
-    - time: "17:15 – 17:30"
+    - time: "17:20 – 17:30"
       title: "Next meeting and wrap-up"
       detail: "Agree on a time window and host institute for the next meeting."
     - time: "17:30"
