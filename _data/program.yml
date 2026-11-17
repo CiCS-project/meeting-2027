@@ -1,0 +1,49 @@
+# The program. Each session has a name and a list of items.
+# Item fields: time (required), title (required), detail (optional),
+# break: true (optional; renders the item greyed out, e.g. coffee).
+
+- session: "Opening"
+  items:
+    - time: "12:30 – 12:40"
+      title: "Welcome and announcement of the RSP"
+      detail: "Goals of the afternoon; introduction of the RSP and a call for colleagues interested in taking on a role."
+
+- session: "Session 1: Institute highlights"
+  items:
+    - time: "12:40 – 13:20"
+      title: "Institute 1: highlights"
+      detail: "Speaker(s) TBA"
+    - time: "13:20 – 14:00"
+      title: "Institute 2: highlights"
+      detail: "Speaker(s) TBA"
+    - time: "14:00 – 14:20"
+      title: "Coffee break"
+      break: true
+
+- session: "Session 2: Institute highlights"
+  items:
+    - time: "14:20 – 15:00"
+      title: "Institute 3: highlights"
+      detail: "Speaker(s) TBA"
+    - time: "15:00 – 15:40"
+      title: "Institute 4: highlights"
+      detail: "Speaker(s) TBA"
+    - time: "15:40 – 16:10"
+      title: "Coffee break and poster voting"
+      detail: "Place your notes on the posters for the interactive session."
+      break: true
+
+- session: "Session 3: Highlights and the future of CiCS"
+  items:
+    - time: "16:10 – 16:50"
+      title: "Institute 5: highlights"
+      detail: "Speaker(s) TBA"
+    - time: "16:50 – 17:20"
+      title: "Interactive session: what are the most important problems for CiCS?"
+      detail: "Discussion of the poster voting."
+    - time: "17:20 – 17:30"
+      title: "What do CiCS members need to be successful?"
+      detail: "Ideas for shared support, such as training or a regular seminar; wrap-up."
+    - time: "17:30"
+      title: "Drinks"
+      break: true

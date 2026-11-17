@@ -1,0 +1,21 @@
+# Site-wide settings and event details. Edit these to update the page header.
+title: "CiCS Meeting"
+project: "Challenges in Cyber Security"
+project_note: "NWO Gravitation project"
+tagline: "An afternoon of highlights and discussion with all CiCS institutes"
+description: "Meeting of the Challenges in Cyber Security (CiCS) Gravitation project, Wednesday 27 January 2027, 12:30–17:30, Vrije Universiteit Amsterdam."
+
+event:
+  date: "Wednesday, 27 January 2027"
+  time: "12:30 – 17:30, followed by drinks"
+  location: "Vrije Universiteit Amsterdam (room to be announced)"
+  address: "De Boelelaan 1105, Amsterdam"
+  map_url: "https://www.google.com/maps/search/?api=1&query=Vrije+Universiteit+Amsterdam+De+Boelelaan+1105"
+  registration_url: "https://hyperelliptic.org/tanja/c896aa4b90aee4a9a69d5b059a0570451b53a4c9-reg.html"
+  registration_text: "the meeting is free of charge, but registration is mandatory so that we can plan the catering. Please register only if you intend to come."
+
+baseurl: "/meeting-2027"
+url: "https://cics-project.github.io"
+
+exclude:
+  - README.md

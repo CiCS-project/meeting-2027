@@ -9,5 +9,15 @@ Website for the meeting of **Challenges in Cyber Security (CiCS)**, an NWO Gravi
 
 ## Editing
 
-The site is a single static file, `index.html`, served by GitHub Pages from the `main` branch (no build step; `.nojekyll` disables Jekyll).
-To update the program, edit the `<div class="item">` blocks in `index.html` and push to `main`; the page is redeployed within a minute or two.
+The page is built by GitHub Pages with Jekyll on every push to `main` (no local build needed; it is live within a minute or two).
+
+| What to change | File |
+|---|---|
+| Program: sessions, times, titles, speakers, breaks | `_data/program.yml` |
+| Date, time, location, registration link, project name | `_config.yml` |
+| Page structure (HTML) | `index.html`, `_layouts/default.html` |
+| Styling | `assets/style.css` |
+
+In `_data/program.yml`, each item has a `time`, a `title`, an optional `detail` (e.g. speaker), and `break: true` for coffee/drinks rows.
+
+To preview locally (optional): `gem install jekyll && jekyll serve`, then open <http://localhost:4000/meeting-2027/>.
