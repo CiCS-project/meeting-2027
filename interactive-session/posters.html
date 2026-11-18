@@ -198,7 +198,7 @@ const html = [
     `<div class="nine">${NINE.cols.map(c => `<div class="ph">${c}</div>`).join("")}${NINE.cells.map(c => `<div class="cell">${esc(c)}</div>`).join("")}</div>`,
     "Use the sticker colour of your institution. Two stickers per person: on one challenge twice, or on two different ones."),
   page("Where did you go to primary school?", "", mapBody("m1")),
-  page("Where did you get your PhD?", "", mapBody("m2", "Not yet / in progress")),
+  page("Where did you get – or are you doing – your PhD?", "", mapBody("m2")),
   page("Where do you feel most at home?", "Publication venues, arranged by topic. <b>Bold</b> with a number: venues of CiCS papers so far (number of papers).", venueBody,
     "Use the sticker colour of your institution. One sticker per person on the venue where you feel most at home."),
   page("Formal verification: which tools do you use?", "As many stickers as apply.", fvBody,
