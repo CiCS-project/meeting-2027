@@ -8,6 +8,7 @@ This folder is excluded from the website build (see `exclude` in `_config.yml`).
 |---|---|
 | `README.md` | This facilitation guide: timeline, roles, materials checklist |
 | `posters.md` | **What each poster asks**, sticker rules, open points |
+| `posters.pdf` | **Ready-to-print PDF** of all 9 posters (A3 landscape; scale up to A2/A1 at a print shop). Regenerate after editing `posters.html` (see below) |
 | `posters.html` | Printable posters, one per page (open in a browser, wait for the maps, then Print → A3 landscape, margins none; a print shop can scale them up to A2/A1) |
 | `group-sheet.md` | One-page worksheet per small group |
 | `results.md` | Template for recording the outcome after the meeting |
@@ -47,3 +48,15 @@ This folder is excluded from the website build (see `exclude` in `_config.yml`).
 1. Your stickers have your institution's colour. Place one per poster (two on the challenges poster; as many as apply on the verification-tools and AI-models posters).
 2. Place them during the sticker round at 13:15, or later in the coffee break, but before 14:50.
 3. Use the posters to find people. If your sticker is next to someone else's, go and talk to them.
+
+## Regenerating `posters.pdf`
+
+After editing `posters.html`, run this from the repository root (it needs internet access for the maps):
+
+```sh
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --no-pdf-header-footer \
+  --virtual-time-budget=20000 --print-to-pdf=interactive-session/posters.pdf \
+  "file://$PWD/interactive-session/posters.html"
+```
+
+Check that the maps on posters 2 and 3 are visible before committing.
