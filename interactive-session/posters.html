@@ -140,7 +140,7 @@ const VENUE_MAP = [
 ];
 const FV = [
   { g: "Proof assistants", cols: 2, t: [["Lean"],["Rocq (Coq)"],["Isabelle"],["Agda"],["HOL4 / CakeML"]] },
-  { g: "Cryptographic proofs & code", cols: 3, t: [["EasyCrypt"],["Jasmin"],["Formosa", "libjade, formosa-mlkem"],["CryptoVerif"],["SSProve"],["F* / HACL*"],["Cryptol / SAW"],["hax", "Rust → proofs"]] },
+  { g: "Cryptographic proofs & code", cols: 3, t: [["EasyCrypt"],["Jasmin"],["CryptoVerif"],["SSProve"],["F* / HACL*"],["Cryptol / SAW"],["hax", "Rust → proofs"]] },
   { g: "Protocols", cols: 1, t: [["ProVerif"],["Tamarin"],["Squirrel"]] },
   { g: "Programs & systems", cols: 2, t: [["Dafny"],["Why3"],["Verus / Kani", "Rust"],["TLA+"],["SMT solvers", "Z3, cvc5"]] }
 ];
@@ -201,7 +201,7 @@ const html = [
   page("Where did you get – or are you doing – your PhD?", "", mapBody("m2")),
   page("Where do you feel most at home?", "Publication venues, arranged by topic. <b>Bold</b> with a number: venues of CiCS papers so far (number of papers).", venueBody,
     "Use the sticker colour of your institution. One sticker per person on the venue where you feel most at home."),
-  page("Formal verification: which tools do you use?", "As many stickers as apply.", fvBody,
+  page("Formal verification: which tools have you ever used?", "As many stickers as apply.", fvBody,
     "Use the sticker colour of your institution. As many stickers as apply."),
   page("AI: how often do you use AI for research?", "",
     `<div class="chart"><div class="ylab">Career stage</div>
