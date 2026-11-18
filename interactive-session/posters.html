@@ -12,10 +12,9 @@
 
   Maps: Natural Earth country outlines (public domain) via the world-atlas package.
 
-  VENUES below were generated from cschaffner/CiCS-output publications/publications.json
-  (field "venue"; year and parentheses removed; arXiv, ePrint, datasets and reports skipped):
-    gh api repos/cschaffner/CiCS-output/contents/publications/publications.json --jq .download_url \
-      | xargs curl -s -H "Authorization: token $(gh auth token)" | python3 -c '...count venues...'
+  CiCS venue counts in VENUE_MAP were taken from cschaffner/CiCS-output
+  publications/publications.json (field "venue"; year and parentheses removed;
+  arXiv, ePrint, datasets and reports skipped), as of 2026-11-18.
 -->
 <script src="https://cdn.jsdelivr.net/npm/d3-array@3.2.4/dist/d3-array.min.js" integrity="sha384-VpKMdU+TlpggHFip46tJ/xkFUs8NFBwLqUMo3+3uiu411lU6eUQYsHVU+JFpA5ja" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-geo@3.1.1/dist/d3-geo.min.js" integrity="sha384-VNiKRUXp0MmglFfqDwkfuk+Y78C3WTJShdKSaFwOacLR3UmamxHIJLBTD3BadIXD" crossorigin="anonymous"></script>
@@ -26,69 +25,94 @@
   body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; color: #111; background: #ddd; }
   .poster {
     width: 420mm; height: 297mm; background: #fff; margin: 10mm auto;
-    padding: 12mm 16mm 10mm; display: flex; flex-direction: column;
+    padding: 11mm 15mm 9mm; display: flex; flex-direction: column;
     page-break-after: always; break-after: page; overflow: hidden;
   }
   .head { display: flex; justify-content: space-between; align-items: center; font-size: 12pt; color: #555; gap: 6mm; }
   .legend { display: flex; gap: 4mm; align-items: center; font-size: 11pt; }
   .legend span { display: inline-flex; align-items: center; gap: 1.5mm; }
   .legend i { width: 9mm; height: 9mm; border: 0.4mm dashed #999; border-radius: 50%; display: inline-block; }
-  .q { font-size: 34pt; font-weight: 700; line-height: 1.12; margin: 5mm 0 2mm; }
-  .sub { font-size: 15pt; color: #444; margin-bottom: 6mm; }
-  .body { flex: 1; display: flex; min-height: 0; }
+  .q { font-size: 32pt; font-weight: 700; line-height: 1.12; margin: 4mm 0 1mm; }
+  .sub { font-size: 14pt; color: #444; margin-bottom: 4mm; }
+  .body { flex: 1; display: flex; min-height: 0; margin-top: 2mm; }
   .foot { font-size: 11pt; color: #666; margin-top: 3mm; }
 
   /* columns of options */
   .cols { flex: 1; display: grid; gap: 3mm; grid-template-rows: auto 1fr; }
   .cols .ch { font-size: 20pt; font-weight: 700; text-align: center; padding: 3mm 2mm; background: #eee; display: flex; align-items: center; justify-content: center; }
   .cols .cc { border: 0.6mm solid #111; }
-  .cols .ch.muted { color: #666; font-weight: 500; font-style: italic; }
+  .muted { color: #666 !important; font-weight: 500 !important; font-style: italic; }
 
   /* nine challenges */
   .nine { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto repeat(3, 1fr); gap: 3mm; }
   .nine .ph { font-size: 22pt; font-weight: 700; text-align: center; padding: 2mm; background: #eee; }
   .nine .cell { border: 0.6mm solid #111; padding: 3mm 4mm; font-size: 17pt; font-weight: 600; }
 
-  /* quadrant / axes */
+  /* career-stage rows (poster 6) */
   .chart { flex: 1; display: grid; grid-template-columns: 16mm 1fr; grid-template-rows: 1fr 14mm; }
   .ylab { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-size: 18pt; font-weight: 600; }
   .xlab { grid-column: 2; display: flex; justify-content: space-between; font-size: 16pt; font-weight: 600; padding-top: 2mm; }
   .plot { position: relative; border-left: 1.2mm solid #111; border-bottom: 1.2mm solid #111; display: grid; }
-  .plot.q4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-  .plot > div { border: 0.4mm dashed #bbb; position: relative; }
-  .plot > div span { position: absolute; font-size: 12pt; color: #999; padding: 3mm 4mm; }
-  .tl span { top: 0; left: 0; } .tr span { top: 0; right: 0; } .bl span { bottom: 0; left: 0; } .br span { bottom: 0; right: 0; }
   .rows { grid-template-rows: repeat(4, 1fr); }
-  .rows > div { display: flex; align-items: center; }
+  .rows > div { display: flex; align-items: center; position: relative; border-bottom: 0.4mm dashed #bbb; }
   .rows > div b { font-size: 16pt; color: #333; padding-left: 4mm; position: absolute; left: 0; }
   .rows > div::after { content: ""; position: absolute; left: 33.3%; right: 33.3%; top: 0; bottom: 0; border-left: 0.4mm dashed #ddd; border-right: 0.4mm dashed #ddd; }
 
+  /* centred-axes plots (posters 8, 9) */
+  .cross { flex: 1; position: relative; }
+  .cross svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .cross .ax { stroke: #111; stroke-width: 3; marker-end: url(#arr); }
+  .cross .tick { stroke: #111; stroke-width: 2; }
+  .cross .grid { stroke: #e2e2e2; stroke-width: 1.2; stroke-dasharray: 6 5; }
+  .lbl { position: absolute; font-size: 15pt; font-weight: 600; background: #fff; padding: 0.5mm 1.5mm; white-space: nowrap; }
+  .lbl.t { font-size: 13pt; font-weight: 500; color: #333; }
+  .lbl.c { font-size: 12pt; font-weight: 400; color: #999; background: none; }
+
   /* maps */
-  .maps { flex: 1; display: grid; grid-template-columns: 1.55fr 1fr; gap: 5mm; min-height: 0; }
-  .maps figure { margin: 0; border: 0.5mm solid #999; position: relative; display: flex; }
-  .maps figcaption { position: absolute; left: 3mm; top: 2mm; font-size: 13pt; font-weight: 600; color: #555; background: rgba(255,255,255,.8); padding: 0 1.5mm; }
+  .maps { flex: 1; display: grid; grid-template-columns: 1fr 150mm; gap: 4mm; min-height: 0; }
+  .maps .left { display: flex; flex-direction: column; gap: 4mm; min-height: 0; }
+  .maps .lower { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; min-height: 0; }
+  .maps figure { margin: 0; border: 0.5mm solid #999; position: relative; display: flex; min-height: 0; overflow: hidden; }
+  .maps figcaption { position: absolute; left: 3mm; top: 2mm; font-size: 13pt; font-weight: 600; color: #555; background: rgba(255,255,255,.85); padding: 0 1.5mm; z-index: 1; }
   .maps svg { width: 100%; height: 100%; display: block; }
   .land { fill: #eef0f2; stroke: #8a9099; stroke-width: 0.5; }
   .nl { fill: #dde4ee; }
-  .grat { fill: none; stroke: #e6e6e6; stroke-width: 0.4; }
+  .grat { fill: none; stroke: #e8e8e8; stroke-width: 0.4; }
   .frame { fill: none; stroke: #c55; stroke-width: 1.2; stroke-dasharray: 4 3; }
-  .side { display: flex; flex-direction: column; gap: 5mm; }
-  .side figure { flex: 1; }
-  .box { border: 0.6mm solid #111; padding: 3mm 4mm; font-size: 16pt; font-weight: 600; height: 34mm; }
+  .city { fill: #555; } .cityl { font-size: 11px; fill: #555; font-family: inherit; }
+  .box { border: 0.6mm solid #111; padding: 3mm 4mm; font-size: 16pt; font-weight: 600; }
 
-  /* venue cloud */
-  .cloud { flex: 1; display: flex; flex-wrap: wrap; align-content: space-evenly; justify-content: space-evenly; gap: 6mm 8mm; }
-  .cloud div { border: 0.6mm solid #111; border-radius: 3mm; padding: 4mm 6mm 14mm; font-weight: 700; }
-  .cloud div.blank { border-style: dashed; color: #aaa; font-weight: 400; min-width: 55mm; }
+  /* venue map */
+  .vmap { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto repeat(3, 1fr) auto; gap: 2.5mm; min-height: 0; }
+  .vmap .colh { font-size: 13pt; font-weight: 700; color: #555; text-align: center; letter-spacing: .02em; text-transform: uppercase; }
+  .area { border-radius: 4mm; padding: 2.5mm 3mm; display: flex; flex-direction: column; min-height: 0; }
+  .area h3 { margin: 0 0 1.5mm; font-size: 14pt; }
+  .area .vs { flex: 1; display: flex; flex-wrap: wrap; align-content: space-around; gap: 1.5mm 2mm; }
+  .v { background: #fff; border: 0.4mm solid #888; border-radius: 2mm; padding: 1mm 2.5mm 7mm; font-size: 12pt; }
+  .v.c { border: 0.7mm solid #111; font-weight: 700; font-size: 14pt; }
+  .v.c sup { font-size: 9pt; background: #111; color: #fff; border-radius: 2mm; padding: 0 1.2mm; margin-left: 1mm; }
+  .v.o { color: #999; border-style: dashed; min-width: 30mm; }
+  .others { grid-column: 1 / -1; display: flex; gap: 3mm; align-items: center; font-size: 12pt; color: #666; }
+
+  /* formal verification groups */
+  .fv { flex: 1; display: grid; grid-template-columns: 5fr 8fr 3fr 5fr; grid-template-rows: minmax(0, 1fr) 24mm; gap: 3mm; min-height: 0; }
+  .fv .grp { display: flex; flex-direction: column; gap: 2mm; min-height: 0; }
+  .fv .gh { font-size: 15pt; font-weight: 700; text-align: center; background: #eee; padding: 2mm; }
+  .fv .tools { flex: 1; display: grid; gap: 2mm; grid-auto-rows: minmax(0, 1fr); min-height: 0; }
+  .fv .t { border: 0.6mm solid #111; padding: 2mm 3mm; font-size: 16pt; font-weight: 700; }
+  .fv .t small { display: block; font-size: 10pt; font-weight: 400; color: #666; }
+  .fv .extra { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
 
   @media print { body { background: none; } .poster { margin: 0; } }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#111"/></marker>
+</defs></svg>
 <div id="out"></div>
 <script>
 const INST = ["TU/e", "CWI", "VU", "UvA", "RU", "Other / guest"];
-const VENUES = [["IEEE S&P",3],["NDSS",3],["ASIACRYPT",3],["ACM CCS",2],["USENIX Security",2],["IACR TCHES",2],["NeurIPS",2],["APPROX/RANDOM",2],["CANS",2],["EUROCRYPT",1],["TCC",1],["ACM AsiaCCS",1],["ACSAC",1],["NordSec",1],["SPACE",1],["GameSec",1],["IWSPA",1],["DATE",1],["IEEE ISVLSI",1],["The Web Conference",1],["IEEE TIFS",1],["IEEE TDSC",1],["ACM TOPS",1],["IEEE TKDE",1],["PeerJ CS",1]];
 const NINE = {
   cols: ["Crypto", "HW", "SW"],
   cells: [
@@ -97,6 +121,29 @@ const NINE = {
     "Complex cryptographic systems", "Defenses against side-channel attacks", "Machine learning for security and insecurity"
   ]
 };
+// Thematic venue map: 4 columns (theory -> cryptography -> security -> ML & systems),
+// 3 rows (foundations -> applied -> engineering / journals). [name, number of CiCS papers]
+const VENUE_COLS = ["Theory", "Cryptography", "Security & privacy", "AI, data & systems"];
+const VENUE_MAP = [
+  [ { t: "Theory of computing", c: "#eef2fb", v: [["STOC"],["FOCS"],["SODA"],["ICALP"],["CCC"],["ITCS"],["APPROX/RANDOM",2]] },
+    { t: "Cryptography", c: "#eef8f0", v: [["CRYPTO"],["EUROCRYPT",1],["ASIACRYPT",3],["TCC",1],["PKC"],["J. Cryptology"]] },
+    { t: "Top security & privacy", c: "#fbf0ee", v: [["IEEE S&P",3],["USENIX Security",2],["ACM CCS",2],["NDSS",3],["IEEE EuroS&P"],["PETS"]] },
+    { t: "Machine learning & AI", c: "#f6effa", v: [["NeurIPS",2],["ICML"],["ICLR"],["SaTML"],["AISec"]] } ],
+  [ { t: "Quantum information", c: "#eef2fb", v: [["QIP"],["TQC"],["QCrypt"],["Quantum"]] },
+    { t: "Applied cryptography", c: "#eef8f0", v: [["Real World Crypto"],["CT-RSA"],["ACNS"],["CANS",2],["SAC"],["PQCrypto"]] },
+    { t: "More security venues", c: "#fbf0ee", v: [["ACSAC",1],["ACM AsiaCCS",1],["ESORICS"],["RAID"],["DIMVA"],["NordSec",1],["GameSec",1]] },
+    { t: "Data, web & analytics", c: "#f6effa", v: [["The Web Conference",1],["IEEE TKDE",1],["IWSPA",1],["KDD"]] } ],
+  [ { t: "Formal methods & PL", c: "#eef2fb", v: [["CAV"],["POPL"],["PLDI"],["CSF"],["ITP / CPP"]] },
+    { t: "Crypto engineering & hardware", c: "#eef8f0", v: [["IACR TCHES",2],["FSE / ToSC"],["SPACE",1],["HOST"],["DATE",1],["DAC"],["IEEE ISVLSI",1]] },
+    { t: "Journals", c: "#fbf0ee", v: [["IEEE TIFS",1],["IEEE TDSC",1],["ACM TOPS",1],["Computers & Security"],["PeerJ CS",1]] },
+    { t: "Systems & architecture", c: "#f6effa", v: [["OSDI / SOSP"],["EuroSys"],["ASPLOS"],["ISCA"],["MICRO"]] } ]
+];
+const FV = [
+  { g: "Proof assistants", cols: 2, t: [["Lean"],["Rocq (Coq)"],["Isabelle"],["Agda"],["HOL4 / CakeML"]] },
+  { g: "Cryptographic proofs & code", cols: 3, t: [["EasyCrypt"],["Jasmin"],["Formosa", "libjade, formosa-mlkem"],["CryptoVerif"],["SSProve"],["F* / HACL*"],["Cryptol / SAW"],["hax", "Rust → proofs"]] },
+  { g: "Protocols", cols: 1, t: [["ProVerif"],["Tamarin"],["Squirrel"]] },
+  { g: "Programs & systems", cols: 2, t: [["Dafny"],["Why3"],["Verus / Kani", "Rust"],["TLA+"],["SMT solvers", "Z3, cvc5"]] }
+];
 const esc = s => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 const legend = `<div class="legend">${INST.map(i => `<span><i></i>${esc(i)}</span>`).join("")}</div>`;
 let n = 0;
@@ -108,36 +155,69 @@ const page = (q, sub, body, foot) => `<section class="poster">
 const cols = (opts) => `<div class="cols" style="grid-template-columns:repeat(${opts.length},1fr)">${
   opts.map(o => `<div class="ch${o.startsWith("~") ? " muted" : ""}">${esc(o.replace(/^~/, ""))}</div>`).join("")}${
   opts.map(() => `<div class="cc"></div>`).join("")}</div>`;
-const mapBody = (id, extra) => `<div class="maps">
-  <figure><figcaption>World</figcaption><svg id="${id}-w"></svg></figure>
-  <div class="side"><figure><figcaption>Europe (enlarged)</figcaption><svg id="${id}-e"></svg></figure>${extra || ""}</div></div>`;
+const mapBody = (id, box) => `<div class="maps">
+  <div class="left"><figure id="${id}-wf"><figcaption>World</figcaption><svg id="${id}-w"></svg></figure>
+    <div class="lower"><figure><figcaption>The Netherlands (enlarged)</figcaption><svg id="${id}-n"></svg></figure>
+      <div class="box" style="display:flex;flex-direction:column">${box}</div></div></div>
+  <figure><figcaption>Europe (enlarged)</figcaption><svg id="${id}-e"></svg></figure></div>`;
+
+// Plot with axes crossing in the middle. xs / ys: tick labels from low to high (centre tick sits on the crossing).
+function cross({ xName, yName, xs, ys, corners }) {
+  const xt = xs.map((s, i) => ({ s, p: 4 + 92 * i / (xs.length - 1) }));
+  const yt = ys.map((s, i) => ({ s, p: 96 - 92 * i / (ys.length - 1) }));
+  let svg = `<svg preserveAspectRatio="none" viewBox="0 0 100 100">`;
+  for (const t of xt) svg += `<line class="grid" x1="${t.p}" y1="2" x2="${t.p}" y2="98" vector-effect="non-scaling-stroke"/>`;
+  for (const t of yt) svg += `<line class="grid" x1="1" y1="${t.p}" x2="99" y2="${t.p}" vector-effect="non-scaling-stroke"/>`;
+  svg += `<line class="ax" x1="0" y1="50" x2="100" y2="50" vector-effect="non-scaling-stroke"/>
+          <line class="ax" x1="50" y1="100" x2="50" y2="0" vector-effect="non-scaling-stroke"/></svg>`;
+  let h = svg;
+  for (const t of xt) if (t.s) h += `<div class="lbl t" style="left:${t.p}%;top:50%;transform:translate(${t.p === 50 ? "4mm" : "-50%"},3mm)">${esc(t.s)}</div>`;
+  for (const t of yt) if (t.s) h += `<div class="lbl t" style="left:50%;top:${t.p}%;transform:translate(3mm,${t.p === 50 ? "calc(-100% - 2mm)" : "-50%"})">${esc(t.s)}</div>`;
+  h += `<div class="lbl" style="right:0;top:50%;transform:translateY(calc(-100% - 3mm))">${esc(xName)} →</div>`;
+  h += `<div class="lbl" style="left:50%;top:0;transform:translateX(calc(-100% - 3mm))">↑ ${esc(yName)}</div>`;
+  if (corners) {
+    const pos = ["left:1%;top:1%", "right:1%;top:1%", "left:1%;bottom:1%", "right:1%;bottom:1%"];
+    corners.forEach((c, i) => h += `<div class="lbl c" style="${pos[i]}">${esc(c)}</div>`);
+  }
+  return `<div class="cross">${h}</div>`;
+}
+
+const venueBody = `<div class="vmap">${VENUE_COLS.map(c => `<div class="colh">${c}</div>`).join("")}${
+  VENUE_MAP.flat().map(a => `<div class="area" style="background:${a.c}"><h3>${esc(a.t)}</h3><div class="vs">${
+    a.v.map(([name, k]) => `<div class="v${k ? " c" : ""}">${esc(name)}${k ? `<sup>${k}</sup>` : ""}</div>`).join("")}</div></div>`).join("")}
+  <div class="others"><b>Somewhere else?</b>${'<div class="v o">other: …</div>'.repeat(6)}</div></div>`;
+
+const fvBody = `<div class="fv">${FV.map(g => `<div class="grp"><div class="gh">${g.g}</div>
+  <div class="tools" style="grid-template-columns:repeat(${g.cols},1fr)">${
+    g.t.map(([t, s]) => `<div class="t">${esc(t)}${s ? `<small>${esc(s)}</small>` : ""}</div>`).join("")}</div></div>`).join("")}
+  <div class="extra"><div class="t">Other: …</div>
+  <div style="border:0.6mm solid #111;padding:2mm 3mm;font-size:16pt" class="muted">Unfamiliar with formal verification</div></div></div>`;
 
 const html = [
   page("Which core challenges are closest to your work?", "Two stickers per person.",
     `<div class="nine">${NINE.cols.map(c => `<div class="ph">${c}</div>`).join("")}${NINE.cells.map(c => `<div class="cell">${esc(c)}</div>`).join("")}</div>`,
     "Use the sticker colour of your institution. Two stickers per person: on one challenge twice, or on two different ones."),
-  page("Where did you go to primary school?", "", mapBody("m1")),
-  page("Where did you get your PhD?", "", mapBody("m2", `<div class="box">Not yet / in progress</div>`)),
-  page("Where do you feel most at home?", "Publication venues of CiCS papers so far (larger = more CiCS papers). Add your favourite in an empty box.",
-    `<div class="cloud">${VENUES.map(([v, k]) => `<div style="font-size:${[0, 17, 25, 33][k]}pt">${esc(v)}</div>`).join("")}${
-      "<div class='blank'>other: …</div>".repeat(4)}</div>`),
-  page("Formal verification: which tools do you use?", "As many stickers as apply.",
-    cols(["Lean", "EasyCrypt", "Rocq (Coq)", "Isabelle", "Jasmin", "Formosa", "Other: …", "~Unfamiliar"]),
+  page("Where did you go to primary school?", "", mapBody("m1", "Not on a map? Write the place here:")),
+  page("Where did you get your PhD?", "", mapBody("m2", "Not yet / in progress")),
+  page("Where do you feel most at home?", "Publication venues, arranged by topic. <b>Bold</b> with a number: venues of CiCS papers so far (number of papers).", venueBody,
+    "Use the sticker colour of your institution. One sticker per person on the venue where you feel most at home."),
+  page("Formal verification: which tools do you use?", "As many stickers as apply.", fvBody,
     "Use the sticker colour of your institution. As many stickers as apply."),
   page("AI: how often do you use AI for research?", "",
     `<div class="chart"><div class="ylab">Career stage</div>
-      <div class="plot rows">${["PhD student", "Postdoc", "Faculty", "Other"].map(r => `<div style="border:0;border-bottom:0.4mm dashed #bbb"><b>${r}</b></div>`).join("")}</div>
+      <div class="plot rows">${["PhD student", "Postdoc", "Faculty", "Other"].map(r => `<div><b>${r}</b></div>`).join("")}</div>
       <div class="xlab"><span>never</span><span>sometimes</span><span>always</span></div></div>`),
   page("AI: which models do you use?", "As many stickers as apply.",
-    cols(["Claude", "ChatGPT", "Mistral", "Open-weight", "Self-trained", "Other: …"]),
+    cols(["Claude", "ChatGPT", "Gemini", "Mistral", "Open-weight", "Self-trained", "Other: …"]),
     "Use the sticker colour of your institution. As many stickers as apply."),
-  page("AI agents: how do you run them?", "Which permission mode do you usually give your coding or research agents?",
-    cols(["YOLO", "Auto", "Manual approval", "Sandbox", "~I don't use agents"])),
+  page("AI tools and agents: how much do you let them do?", "",
+    cross({ xName: "How often do you use AI tools (in general)?", yName: "How do you run AI agents?",
+            xs: ["never", "rarely", "sometimes", "often", "always"],
+            ys: ["no agents", "manual approval", "auto mode", "sandboxed, unattended", "YOLO"] })),
   page("Are you worried about AI developments?", "",
-    `<div class="chart"><div class="ylab">Worried about existential risk →</div>
-      <div class="plot q4"><div class="tl"><span>existential risk only</span></div><div class="tr"><span>both</span></div>
-        <div class="bl"><span>not worried</span></div><div class="br"><span>job security only</span></div></div>
-      <div class="xlab"><span>not worried</span><span>Worried about job security →</span><span>very worried</span></div></div>`)
+    cross({ xName: "Worried about job security", yName: "Worried about existential risk",
+            xs: ["not at all", "", "very"], ys: ["not at all", "", "very"],
+            corners: ["existential risk only", "both", "neither", "job security only"] }))
 ].join("");
 document.getElementById("out").innerHTML = html;
 
@@ -146,26 +226,42 @@ const W = "https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/";
 const SRI = { "countries-110m.json": "sha384-yOCJ+8ShBm8UDqtAVtAvxTDDf4gXo5edxl/YG0FmVC5OTmqVLl7utuVGBDEeZWHf",
               "countries-50m.json": "sha384-Aw4s9pX1PTPntIYkZ/qV9IYiF5Gv8eTl6Dd/TT56zfO1Wwd+owFwYUuuXNUMrWkc" };
 const get = f => fetch(W + f, { integrity: SRI[f] }).then(r => r.json());
-Promise.all([get("countries-110m.json"), get("countries-50m.json")])
-  .then(([w110, w50]) => {
-    const world = topojson.feature(w110, w110.objects.countries);
-    const eur = topojson.feature(w50, w50.objects.countries);
-    const box = { type: "Feature", geometry: { type: "Polygon", coordinates: [[[-11, 35], [-11, 62], [32, 62], [32, 35], [-11, 35]].map(p => p) ] } };
-    const draw = (svg, fc, proj, frame) => {
-      const r = svg.getBoundingClientRect(), wd = r.width || 900, ht = r.height || 600;
-      svg.setAttribute("viewBox", `0 0 ${wd} ${ht}`);
-      const path = d3.geoPath(proj.fitExtent([[8, 8], [wd - 8, ht - 8]], frame || fc));
-      let s = `<path class="grat" d="${path(d3.geoGraticule10())}"/>`;
-      for (const f of fc.features) s += `<path class="land${f.properties.name === "Netherlands" ? " nl" : ""}" d="${path(f) || ""}"/>`;
-      if (!frame) s += `<path class="frame" d="${path(box)}"/>`;
-      svg.innerHTML = s;
-    };
-    for (const id of ["m1", "m2"]) {
-      draw(document.getElementById(id + "-w"), world, d3.geoNaturalEarth1());
-      draw(document.getElementById(id + "-e"), eur, d3.geoConicConformal().rotate([-10, 0]).parallels([40, 60]), box);
+const CITIES = [["Amsterdam",4.90,52.37],["Delft",4.36,52.01],["Eindhoven",5.48,51.44],["Enschede",6.89,52.22],["Groningen",6.57,53.22],
+  ["Leiden",4.49,52.16],["Maastricht",5.69,50.85],["Nijmegen",5.86,51.84],["Rotterdam",4.48,51.92],["Tilburg",5.09,51.56],["Utrecht",5.12,52.09],["Wageningen",5.67,51.97]];
+const rect = (a, b, c, d) => ({ type: "Feature", geometry: { type: "Polygon", coordinates: [[[a, b], [a, d], [c, d], [c, b], [a, b]]] } });
+Promise.all([get("countries-110m.json"), get("countries-50m.json")]).then(([w110, w50]) => {
+  const world = topojson.feature(w110, w110.objects.countries);
+  world.features = world.features.filter(f => f.properties.name !== "Antarctica");
+  const eur = topojson.feature(w50, w50.objects.countries);
+  const nl = topojson.feature(w50, w50.objects.countries);
+  nl.features = nl.features.filter(f => ["Netherlands", "Belgium", "Germany", "Luxembourg", "France", "United Kingdom"].includes(f.properties.name));
+  const EU = rect(-11, 35, 31, 66), NL = rect(3.3, 50.7, 7.3, 53.6);
+  const size = svg => { const r = svg.getBoundingClientRect(); return [r.width, r.height]; };
+  const draw = (svg, fc, proj, fit, opts = {}) => {
+    const [wd, ht] = size(svg);
+    svg.setAttribute("viewBox", `0 0 ${wd} ${ht}`);
+    const path = d3.geoPath(proj.fitExtent([[6, 6], [wd - 6, ht - 6]], fit));
+    let s = opts.grat === false ? "" : `<path class="grat" d="${path(d3.geoGraticule10())}"/>`;
+    for (const f of fc.features) s += `<path class="land${f.properties.name === "Netherlands" ? " nl" : ""}" d="${path(f) || ""}"/>`;
+    if (opts.frames) for (const fr of opts.frames) s += `<path class="frame" d="${path(fr)}"/>`;
+    if (opts.cities) for (const [c, lo, la] of opts.cities) {
+      const [x, y] = proj([lo, la]);
+      s += `<circle class="city" cx="${x}" cy="${y}" r="2.5"/><text class="cityl" x="${x + 4}" y="${y + 4}">${c}</text>`;
     }
-    document.body.dataset.ready = "1";
-  });
+    svg.innerHTML = s;
+  };
+  for (const id of ["m1", "m2"]) {
+    // size the world panel to the map's own aspect ratio, so there is no empty band
+    const wsvg = document.getElementById(id + "-w"), [wd] = size(wsvg);
+    const p = d3.geoNaturalEarth1().fitWidth(wd - 12, world), b = d3.geoPath(p).bounds(world);
+    document.getElementById(id + "-wf").style.height = (b[1][1] - b[0][1] + 12) + "px";
+    document.getElementById(id + "-wf").style.flex = "none";
+    draw(wsvg, world, d3.geoNaturalEarth1(), world, { frames: [EU] });
+    draw(document.getElementById(id + "-e"), eur, d3.geoConicConformal().rotate([-10, 0]).parallels([40, 60]), EU, { frames: [NL] });
+    draw(document.getElementById(id + "-n"), nl, d3.geoMercator(), NL, { grat: false, cities: CITIES });
+  }
+  document.body.dataset.ready = "1";
+}).catch(e => { document.body.insertAdjacentHTML("afterbegin", `<p style="color:#c00;font-size:20pt;padding:10mm">Map data failed to load (${e}). Reload the page.</p>`); });
 </script>
 </body>
 </html>

@@ -17,8 +17,9 @@ This folder is excluded from the website build (see `exclude` in `_config.yml`).
 | Time | What | Who |
 |---|---|---|
 | Before 12:30 | Hang the 9 posters along one wall. Fill in each colour legend with one sticker per colour. Put sticker sheets at the registration desk. | Organisers |
-| 12:30 | Everyone gets a sheet of stickers in their institution's colour at registration. Explain the posters briefly in the welcome. | Organisers, Tanja |
-| 13:15 – 14:30 | **Speed meeting.** The posters serve as prompts: "Find someone whose sticker is near yours on poster X", or "… from another institution on the same challenge". | Everyone |
+| 12:30 | Everyone gets a strip of stickers in their institution's colour at registration. Mention the posters briefly in the welcome. | Organisers, Tanja |
+| 13:15 – 13:30 | **Sticker round.** Everyone places their stickers on the 9 posters (instructions below). | Everyone |
+| 13:30 – 14:30 | **Speed meeting.** The posters serve as prompts: "Find someone whose sticker is near yours on poster X", or "… from another institution on the same challenge". | Everyone |
 | 14:30 – 14:50 | **Coffee break.** Last chance to place stickers. | Everyone |
 | 14:50 – 15:20 | **Walk past the posters together**, about 3 minutes per poster. A facilitator describes the colour patterns: where institutions cluster, where they overlap, and any surprises. One or two people briefly explain an outlier. | Facilitators |
 | 15:20 – 16:00 | **Small groups around shared challenges.** On poster 1, pick the 4–6 challenge cells with stickers from at least 3 institutions. One group per cell (5–8 people, mixed) asks: *what could we do together on this?* Each group fills in `group-sheet.md`. | Groups, each with a note-taker |
@@ -43,6 +44,6 @@ This folder is excluded from the website build (see `exclude` in `_config.yml`).
 
 ## Instructions to read out in the welcome
 
-1. Your stickers have your institution's colour. Place one per poster (two on the challenges poster; as many as apply on the tools, models and agents posters).
-2. Place them whenever you like, but before 14:50.
+1. Your stickers have your institution's colour. Place one per poster (two on the challenges poster; as many as apply on the verification-tools and AI-models posters).
+2. Place them during the sticker round at 13:15, or later in the coffee break, but before 14:50.
 3. Use the posters to find people. If your sticker is next to someone else's, go and talk to them.
