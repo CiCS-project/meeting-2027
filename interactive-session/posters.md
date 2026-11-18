@@ -15,8 +15,8 @@ Getting-to-know-each-other posters, based on Christian's hand-drawn sketch of 18
 | # | Question | Layout |
 |---|---|---|
 | 1 | Which core challenges are closest to your work? | 3×3 grid: columns Crypto / HW / SW, holding the nine CiCS core challenges |
-| 2 | Where did you go to primary school? | World map, enlarged Europe, enlarged Netherlands with university cities, plus a box for places to write in |
-| 3 | Where did you get your PhD? | Same maps, plus a "not yet / in progress" box |
+| 2 | Where did you go to primary school? | World map, enlarged Europe, and a wide enlarged map of the Netherlands and surroundings (Belgium, western Germany) with university cities |
+| 3 | Where did you get your PhD? | Same maps (smaller Netherlands panel), plus a "not yet / in progress" box |
 | 4 | Where do you feel most at home? | Thematic map of publication venues: 4 columns (theory, cryptography, security & privacy, AI/data/systems) × 3 rows (foundations → applied → engineering/journals), 12 named topic areas. CiCS venues are bold with their paper count; well-known venues without CiCS papers yet (CRYPTO, STOC, FOCS, …) are included too. Empty boxes for anything else |
 | 5 | Formal verification: which tools do you use? | Grouped: proof assistants (Lean, Rocq, Isabelle, Agda, HOL4/CakeML); cryptographic proofs & code (EasyCrypt, Jasmin, Formosa, CryptoVerif, SSProve, F*/HACL*, Cryptol/SAW, hax); protocols (ProVerif, Tamarin, Squirrel); programs & systems (Dafny, Why3, Verus/Kani, TLA+, SMT solvers); plus other and unfamiliar |
 | 6 | AI: how often do you use AI for research? | never → sometimes → always, one row per career stage (PhD student, postdoc, faculty, other) |

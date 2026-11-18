@@ -157,8 +157,8 @@ const cols = (opts) => `<div class="cols" style="grid-template-columns:repeat(${
   opts.map(() => `<div class="cc"></div>`).join("")}</div>`;
 const mapBody = (id, box) => `<div class="maps">
   <div class="left"><figure id="${id}-wf"><figcaption>World</figcaption><svg id="${id}-w"></svg></figure>
-    <div class="lower"><figure><figcaption>The Netherlands (enlarged)</figcaption><svg id="${id}-n"></svg></figure>
-      <div class="box" style="display:flex;flex-direction:column">${box}</div></div></div>
+    <div class="lower" style="grid-template-columns:${box ? "3fr 2fr" : "1fr"}"><figure><figcaption>The Netherlands and surroundings (enlarged)</figcaption><svg id="${id}-n"></svg></figure>
+      ${box ? `<div class="box">${box}</div>` : ""}</div></div>
   <figure><figcaption>Europe (enlarged)</figcaption><svg id="${id}-e"></svg></figure></div>`;
 
 // Plot with axes crossing in the middle. xs / ys: tick labels from low to high (centre tick sits on the crossing).
@@ -197,7 +197,7 @@ const html = [
   page("Which core challenges are closest to your work?", "Two stickers per person.",
     `<div class="nine">${NINE.cols.map(c => `<div class="ph">${c}</div>`).join("")}${NINE.cells.map(c => `<div class="cell">${esc(c)}</div>`).join("")}</div>`,
     "Use the sticker colour of your institution. Two stickers per person: on one challenge twice, or on two different ones."),
-  page("Where did you go to primary school?", "", mapBody("m1", "Not on a map? Write the place here:")),
+  page("Where did you go to primary school?", "", mapBody("m1")),
   page("Where did you get your PhD?", "", mapBody("m2", "Not yet / in progress")),
   page("Where do you feel most at home?", "Publication venues, arranged by topic. <b>Bold</b> with a number: venues of CiCS papers so far (number of papers).", venueBody,
     "Use the sticker colour of your institution. One sticker per person on the venue where you feel most at home."),
@@ -227,14 +227,16 @@ const SRI = { "countries-110m.json": "sha384-yOCJ+8ShBm8UDqtAVtAvxTDDf4gXo5edxl/
               "countries-50m.json": "sha384-Aw4s9pX1PTPntIYkZ/qV9IYiF5Gv8eTl6Dd/TT56zfO1Wwd+owFwYUuuXNUMrWkc" };
 const get = f => fetch(W + f, { integrity: SRI[f] }).then(r => r.json());
 const CITIES = [["Amsterdam",4.90,52.37],["Delft",4.36,52.01],["Eindhoven",5.48,51.44],["Enschede",6.89,52.22],["Groningen",6.57,53.22],
-  ["Leiden",4.49,52.16],["Maastricht",5.69,50.85],["Nijmegen",5.86,51.84],["Rotterdam",4.48,51.92],["Tilburg",5.09,51.56],["Utrecht",5.12,52.09],["Wageningen",5.67,51.97]];
+  ["Leiden",4.49,52.16],["Maastricht",5.69,50.85],["Nijmegen",5.86,51.84],["Rotterdam",4.48,51.92],["Tilburg",5.09,51.56],["Utrecht",5.12,52.09],["Wageningen",5.67,51.97],
+  ["Antwerp",4.40,51.22],["Brussels",4.35,50.85],["Ghent",3.72,51.05],["Leuven",4.70,50.88],["Liège",5.57,50.63],["Aachen",6.08,50.78],
+  ["Cologne",6.96,50.94],["Bonn",7.10,50.73],["Bochum",7.22,51.48],["Münster",7.63,51.96],["Bremen",8.80,53.08],["Hamburg",9.99,53.55],["Lille",3.06,50.63]];
 const rect = (a, b, c, d) => ({ type: "Feature", geometry: { type: "Polygon", coordinates: [[[a, b], [a, d], [c, d], [c, b], [a, b]]] } });
 Promise.all([get("countries-110m.json"), get("countries-50m.json")]).then(([w110, w50]) => {
   const world = topojson.feature(w110, w110.objects.countries);
   world.features = world.features.filter(f => f.properties.name !== "Antarctica");
   const eur = topojson.feature(w50, w50.objects.countries);
   const nl = topojson.feature(w50, w50.objects.countries);
-  nl.features = nl.features.filter(f => ["Netherlands", "Belgium", "Germany", "Luxembourg", "France", "United Kingdom"].includes(f.properties.name));
+  nl.features = nl.features.filter(f => ["Netherlands", "Belgium", "Germany", "Luxembourg", "France", "United Kingdom", "Denmark", "Switzerland"].includes(f.properties.name));
   const EU = rect(-11, 35, 31, 66), NL = rect(3.3, 50.7, 7.3, 53.6);
   const size = svg => { const r = svg.getBoundingClientRect(); return [r.width, r.height]; };
   const draw = (svg, fc, proj, fit, opts = {}) => {
@@ -246,6 +248,7 @@ Promise.all([get("countries-110m.json"), get("countries-50m.json")]).then(([w110
     if (opts.frames) for (const fr of opts.frames) s += `<path class="frame" d="${path(fr)}"/>`;
     if (opts.cities) for (const [c, lo, la] of opts.cities) {
       const [x, y] = proj([lo, la]);
+      if (x < 4 || y < 18 || x > wd - 60 || y > ht - 6) continue;
       s += `<circle class="city" cx="${x}" cy="${y}" r="2.5"/><text class="cityl" x="${x + 4}" y="${y + 4}">${c}</text>`;
     }
     svg.innerHTML = s;
