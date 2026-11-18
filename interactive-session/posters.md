@@ -21,7 +21,7 @@ Getting-to-know-each-other posters, based on Christian's hand-drawn sketch of 18
 | 5 | Formal verification: which tools have you ever used? | Grouped: proof assistants (Lean, Rocq, Isabelle, Agda, HOL4/CakeML); cryptographic proofs & code (EasyCrypt, Jasmin, CryptoVerif, SSProve, F*/HACL*, Cryptol/SAW, hax); protocols (ProVerif, Tamarin, Squirrel); programs & systems (Dafny, Why3, Verus/Kani, TLA+, SMT solvers); plus other and unfamiliar |
 | 6 | AI: how often do you use AI for research? | never → sometimes → always, one row per career stage (PhD student, postdoc, faculty, other) |
 | 7 | AI: which models do you use? | Claude, ChatGPT, Gemini, Mistral, open-weight, self-trained, other |
-| 8 | AI tools and agents: how much do you let them do? | 2-D, axes crossing in the middle: how often you use AI tools in general (never → always) against how you run agents (no agents → manual approval → auto mode → sandboxed, unattended → YOLO) |
+| 8 | AI tools and agents: how much do you let them do? | 2-D, axes crossing in the middle: how often you use AI tools in general (never → always) against how you run agents (from bottom to top: no agents, on a separate machine, manual approval, auto, YOLO) |
 | 9 | Are you worried about AI developments? | 2-D, axes crossing in the middle: worry about job security (x) against worry about existential risk (y) |
 
 ## Notes
