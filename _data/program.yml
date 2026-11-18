@@ -17,15 +17,15 @@
       title: "Speed meeting"
       detail: "Short rounds of about 5 minutes in rotating pairs across institutes and career stages, each with a prompt (e.g. your research in one sentence, a problem you would like help with)."
     - time: "14:30 – 14:50"
-      title: "Coffee break and quadrant voting"
-      detail: "Place your notes on the posters for the interactive session."
+      title: "Coffee break and sticker posters"
+      detail: "Last chance to place your stickers on the posters."
       break: true
 
 - session: "CiCS priorities"
   items:
     - time: "14:50 – 16:00"
       title: "Interactive session: what are the most important problems for CiCS?"
-      detail: "Discussion of the quadrant posters, then small groups dig into the most promising questions."
+      detail: "Discussion of the sticker posters, then small groups around shared challenges."
     - time: "16:00 – 16:20"
       title: "Coffee break and networking"
       detail: "Breakouts in smaller groups to identify new connections."

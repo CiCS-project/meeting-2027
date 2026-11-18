@@ -1,6 +1,6 @@
-# Group sheet: CiCS priorities (15:20 – 16:00)
+# Group sheet: a shared challenge (15:20 – 16:00)
 
-**Poster / question:** ______________________________________________
+**Challenge (cell on poster 1):** ______________________________________________
 
 **Group members (name, institute):**
 ______________________________________________________________
@@ -10,17 +10,17 @@ ______________________________________________________________
 
 ---
 
-1. **The cloud.** Where did most notes land? Who were the outliers, and why?
+1. **Who works on this?** Go round: one sentence each on your angle on this challenge.
 
    ______________________________________________________________
 
-2. **Our view.** In two or three sentences, what should CiCS do about this question?
+2. **Overlaps.** Where do the institutions' angles meet? Did the other posters (tools, venues, AI use) show anything you share?
 
    ______________________________________________________________
+
+3. **What could we do together?** (a joint paper, a tool, a dataset, a reading group, a visit, …)
+
    ______________________________________________________________
-
-3. **What would make it feasible?** (people, data, partners, funding, tools)
-
    ______________________________________________________________
 
 4. **One concrete next step** for the coming six months:
@@ -33,4 +33,4 @@ ______________________________________________________________
 
 ---
 
-**Report back at 16:20: 3–4 minutes.** Cover answers 2, 4 and 5.
+**Report back at 16:20: 3–4 minutes.** Cover answers 3, 4 and 5.

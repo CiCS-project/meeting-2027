@@ -3,98 +3,169 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CiCS quadrant posters</title>
+<title>CiCS sticker posters</title>
 <!--
-  Printable quadrant posters for the CiCS meeting, 27 January 2027.
-  Edit the POSTERS list below (keep it in sync with questions.md), open in a browser,
-  then Print -> paper size A3, landscape, margins "none", background graphics on.
+  Printable sticker posters for the CiCS meeting, 27 January 2027 (see posters.md).
+  Open in a browser (needs internet for the map data), wait until the maps appear, then
+  Print -> paper size A3, landscape, margins "none", background graphics on.
   Each poster is one page; a print shop can scale A3 up to A2/A1.
+
+  Maps: Natural Earth country outlines (public domain) via the world-atlas package.
+
+  VENUES below were generated from cschaffner/CiCS-output publications/publications.json
+  (field "venue"; year and parentheses removed; arXiv, ePrint, datasets and reports skipped):
+    gh api repos/cschaffner/CiCS-output/contents/publications/publications.json --jq .download_url \
+      | xargs curl -s -H "Authorization: token $(gh auth token)" | python3 -c '...count venues...'
 -->
+<script src="https://cdn.jsdelivr.net/npm/d3-array@3.2.4/dist/d3-array.min.js" integrity="sha384-VpKMdU+TlpggHFip46tJ/xkFUs8NFBwLqUMo3+3uiu411lU6eUQYsHVU+JFpA5ja" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo@3.1.1/dist/d3-geo.min.js" integrity="sha384-VNiKRUXp0MmglFfqDwkfuk+Y78C3WTJShdKSaFwOacLR3UmamxHIJLBTD3BadIXD" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
 <style>
   @page { size: A3 landscape; margin: 0; }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; color: #111; background: #ddd; }
   .poster {
     width: 420mm; height: 297mm; background: #fff; margin: 10mm auto;
-    padding: 14mm 18mm 12mm; display: flex; flex-direction: column;
+    padding: 12mm 16mm 10mm; display: flex; flex-direction: column;
     page-break-after: always; break-after: page; overflow: hidden;
   }
-  .head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13pt; color: #555; }
-  .q { font-size: 34pt; font-weight: 700; line-height: 1.15; margin: 6mm 0 8mm; }
-  .q.blank { color: #bbb; font-weight: 400; border-bottom: 1px dashed #bbb; padding-bottom: 14mm; }
-  .chart { flex: 1; display: grid; grid-template-columns: 14mm 1fr; grid-template-rows: 1fr 12mm; }
-  .ylab { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-size: 18pt; font-weight: 600; }
-  .xlab { grid-column: 2; text-align: center; font-size: 18pt; font-weight: 600; padding-top: 2mm; }
-  .grid { position: relative; border-left: 1.2mm solid #111; border-bottom: 1.2mm solid #111;
-          display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-  .grid > div { border: 0.4mm dashed #aaa; position: relative; }
-  .grid > div span { position: absolute; font-size: 12pt; color: #999; padding: 3mm 4mm; }
-  .tl span { top: 0; left: 0; } .tr span { top: 0; right: 0; }
-  .bl span { bottom: 0; left: 0; } .br span { bottom: 0; right: 0; }
-  .arrow-x { position: absolute; right: -4mm; bottom: -3.2mm; font-size: 16pt; }
-  .arrow-y { position: absolute; left: -3.6mm; top: -6mm; font-size: 16pt; }
-  .foot { font-size: 12pt; color: #555; margin-top: 3mm; }
-  /* nine-challenges overview poster */
+  .head { display: flex; justify-content: space-between; align-items: center; font-size: 12pt; color: #555; gap: 6mm; }
+  .legend { display: flex; gap: 4mm; align-items: center; font-size: 11pt; }
+  .legend span { display: inline-flex; align-items: center; gap: 1.5mm; }
+  .legend i { width: 9mm; height: 9mm; border: 0.4mm dashed #999; border-radius: 50%; display: inline-block; }
+  .q { font-size: 34pt; font-weight: 700; line-height: 1.12; margin: 5mm 0 2mm; }
+  .sub { font-size: 15pt; color: #444; margin-bottom: 6mm; }
+  .body { flex: 1; display: flex; min-height: 0; }
+  .foot { font-size: 11pt; color: #666; margin-top: 3mm; }
+
+  /* columns of options */
+  .cols { flex: 1; display: grid; gap: 3mm; grid-template-rows: auto 1fr; }
+  .cols .ch { font-size: 20pt; font-weight: 700; text-align: center; padding: 3mm 2mm; background: #eee; display: flex; align-items: center; justify-content: center; }
+  .cols .cc { border: 0.6mm solid #111; }
+  .cols .ch.muted { color: #666; font-weight: 500; font-style: italic; }
+
+  /* nine challenges */
   .nine { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto repeat(3, 1fr); gap: 3mm; }
-  .nine .ph { font-size: 20pt; font-weight: 700; text-align: center; padding: 2mm; background: #eee; }
-  .nine .cell { border: 0.6mm solid #111; padding: 4mm; font-size: 18pt; font-weight: 600; }
+  .nine .ph { font-size: 22pt; font-weight: 700; text-align: center; padding: 2mm; background: #eee; }
+  .nine .cell { border: 0.6mm solid #111; padding: 3mm 4mm; font-size: 17pt; font-weight: 600; }
+
+  /* quadrant / axes */
+  .chart { flex: 1; display: grid; grid-template-columns: 16mm 1fr; grid-template-rows: 1fr 14mm; }
+  .ylab { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-size: 18pt; font-weight: 600; }
+  .xlab { grid-column: 2; display: flex; justify-content: space-between; font-size: 16pt; font-weight: 600; padding-top: 2mm; }
+  .plot { position: relative; border-left: 1.2mm solid #111; border-bottom: 1.2mm solid #111; display: grid; }
+  .plot.q4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .plot > div { border: 0.4mm dashed #bbb; position: relative; }
+  .plot > div span { position: absolute; font-size: 12pt; color: #999; padding: 3mm 4mm; }
+  .tl span { top: 0; left: 0; } .tr span { top: 0; right: 0; } .bl span { bottom: 0; left: 0; } .br span { bottom: 0; right: 0; }
+  .rows { grid-template-rows: repeat(4, 1fr); }
+  .rows > div { display: flex; align-items: center; }
+  .rows > div b { font-size: 16pt; color: #333; padding-left: 4mm; position: absolute; left: 0; }
+  .rows > div::after { content: ""; position: absolute; left: 33.3%; right: 33.3%; top: 0; bottom: 0; border-left: 0.4mm dashed #ddd; border-right: 0.4mm dashed #ddd; }
+
+  /* maps */
+  .maps { flex: 1; display: grid; grid-template-columns: 1.55fr 1fr; gap: 5mm; min-height: 0; }
+  .maps figure { margin: 0; border: 0.5mm solid #999; position: relative; display: flex; }
+  .maps figcaption { position: absolute; left: 3mm; top: 2mm; font-size: 13pt; font-weight: 600; color: #555; background: rgba(255,255,255,.8); padding: 0 1.5mm; }
+  .maps svg { width: 100%; height: 100%; display: block; }
+  .land { fill: #eef0f2; stroke: #8a9099; stroke-width: 0.5; }
+  .nl { fill: #dde4ee; }
+  .grat { fill: none; stroke: #e6e6e6; stroke-width: 0.4; }
+  .frame { fill: none; stroke: #c55; stroke-width: 1.2; stroke-dasharray: 4 3; }
+  .side { display: flex; flex-direction: column; gap: 5mm; }
+  .side figure { flex: 1; }
+  .box { border: 0.6mm solid #111; padding: 3mm 4mm; font-size: 16pt; font-weight: 600; height: 34mm; }
+
+  /* venue cloud */
+  .cloud { flex: 1; display: flex; flex-wrap: wrap; align-content: space-evenly; justify-content: space-evenly; gap: 6mm 8mm; }
+  .cloud div { border: 0.6mm solid #111; border-radius: 3mm; padding: 4mm 6mm 14mm; font-weight: 700; }
+  .cloud div.blank { border-style: dashed; color: #aaa; font-weight: 400; min-width: 55mm; }
+
   @media print { body { background: none; } .poster { margin: 0; } }
 </style>
 </head>
 <body>
 <div id="out"></div>
 <script>
-// Axes: "A" = Impact x Feasibility, "B" = Importance for CiCS x My own involvement.
-const AXES = {
-  A: { x: "Feasibility", y: "Impact",
-       q: ["High impact, hard", "High impact, doable", "Low impact, hard", "Low impact, doable"] },
-  B: { x: "I would work on this", y: "Importance for CiCS",
-       q: ["Important, not for me", "Important, count me in", "Less important, not for me", "Less important, but I'm interested"] }
+const INST = ["TU/e", "CWI", "VU", "UvA", "RU", "Other / guest"];
+const VENUES = [["IEEE S&P",3],["NDSS",3],["ASIACRYPT",3],["ACM CCS",2],["USENIX Security",2],["IACR TCHES",2],["NeurIPS",2],["APPROX/RANDOM",2],["CANS",2],["EUROCRYPT",1],["TCC",1],["ACM AsiaCCS",1],["ACSAC",1],["NordSec",1],["SPACE",1],["GameSec",1],["IWSPA",1],["DATE",1],["IEEE ISVLSI",1],["The Web Conference",1],["IEEE TIFS",1],["IEEE TDSC",1],["ACM TOPS",1],["IEEE TKDE",1],["PeerJ CS",1]];
+const NINE = {
+  cols: ["Crypto", "HW", "SW"],
+  cells: [
+    "Breaking performance barriers", "Efficient hardware architectures", "Software security on vulnerable hardware",
+    "Cryptography for long-term security", "Constructive use of physical realities", "Verifying correctness of software",
+    "Complex cryptographic systems", "Defenses against side-channel attacks", "Machine learning for security and insecurity"
+  ]
 };
-const POSTERS = [
-  { q: "Should CiCS develop a joint proof-of-concept around privacy-preserving medical data analysis?", axes: "A" },
-  { q: "Should CiCS build a joint demonstrator combining all three pillars (e.g. verified, side-channel-hardened, post-quantum)?", axes: "A" },
-  { q: "Security of and with AI/ML: attacks on ML, ML for finding bugs and side channels, AI agents", axes: "B" },
-  { q: "Long-term and post-quantum security, including migration", axes: "B" },
-  { q: "Verification: formally verified crypto, software and hardware/software co-verification", axes: "B" },
-  { q: "Software security on vulnerable hardware: microarchitectural, side-channel and fault attacks", axes: "B" },
-  { q: "Should the CWI research semester (spring 2028) focus on one or two of the nine challenges?", axes: "A" },
-  { q: "Should CiCS fund 1–4 week exchange visits of PhD students and postdocs between the institutes?", axes: "A" },
-  { q: null, axes: "A" }, // blank poster for questions raised on the day
-  { q: null, axes: "B" },
-  { nine: true }
-];
-const NINE = [
-  ["Cryptography", "Software security", "Physical security"],
-  ["Breaking performance barriers", "Software security on vulnerable hardware", "Efficient hardware architectures"],
-  ["Cryptography for long-term security", "Verifying correctness of software", "Constructive use of physical realities"],
-  ["Complex cryptographic systems", "Machine learning for security and insecurity", "Defenses against side-channel attacks"]
-];
 const esc = s => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
-const head = n => `<div class="head"><span>CiCS meeting · 27 January 2027 · VU Amsterdam</span><span>Poster ${n}</span></div>`;
-const html = POSTERS.map((p, i) => {
-  const n = i + 1;
-  if (p.nine) {
-    const cells = NINE.slice(1).flat().map(t => `<div class="cell">${esc(t)}</div>`).join("");
-    return `<section class="poster">${head(n)}
-      <div class="q">Which core challenge is closest to your own work?</div>
-      <div class="nine">${NINE[0].map(t => `<div class="ph">${esc(t)}</div>`).join("")}${cells}</div>
-      <div class="foot">Place one note with your name on the challenge closest to your work. Afterwards: find someone from another institute on the same challenge.</div></section>`;
-  }
-  const a = AXES[p.axes];
-  const q = p.q ? `<div class="q">${esc(p.q)}</div>` : `<div class="q blank">Question:</div>`;
-  return `<section class="poster">${head(n)}${q}
-    <div class="chart">
-      <div class="ylab">${a.y} →</div>
-      <div class="grid">
-        <div class="tl"><span>${a.q[0]}</span></div><div class="tr"><span>${a.q[1]}</span></div>
-        <div class="bl"><span>${a.q[2]}</span></div><div class="br"><span>${a.q[3]}</span></div>
-      </div>
-      <div class="xlab">${a.x} →</div>
-    </div>
-    <div class="foot">One sticky note per person, with your name. Add a short comment if you like. Place your note during the coffee break, before 14:50.</div></section>`;
-}).join("");
+const legend = `<div class="legend">${INST.map(i => `<span><i></i>${esc(i)}</span>`).join("")}</div>`;
+let n = 0;
+const page = (q, sub, body, foot) => `<section class="poster">
+  <div class="head"><span>CiCS meeting · 27 January 2027 · Poster ${++n}</span>${legend}</div>
+  <div class="q">${q}</div>${sub ? `<div class="sub">${sub}</div>` : ""}
+  <div class="body">${body}</div>
+  <div class="foot">${foot || "Use the sticker colour of your institution. One sticker per person."}</div></section>`;
+const cols = (opts) => `<div class="cols" style="grid-template-columns:repeat(${opts.length},1fr)">${
+  opts.map(o => `<div class="ch${o.startsWith("~") ? " muted" : ""}">${esc(o.replace(/^~/, ""))}</div>`).join("")}${
+  opts.map(() => `<div class="cc"></div>`).join("")}</div>`;
+const mapBody = (id, extra) => `<div class="maps">
+  <figure><figcaption>World</figcaption><svg id="${id}-w"></svg></figure>
+  <div class="side"><figure><figcaption>Europe (enlarged)</figcaption><svg id="${id}-e"></svg></figure>${extra || ""}</div></div>`;
+
+const html = [
+  page("Which core challenges are closest to your work?", "Two stickers per person.",
+    `<div class="nine">${NINE.cols.map(c => `<div class="ph">${c}</div>`).join("")}${NINE.cells.map(c => `<div class="cell">${esc(c)}</div>`).join("")}</div>`,
+    "Use the sticker colour of your institution. Two stickers per person: on one challenge twice, or on two different ones."),
+  page("Where did you go to primary school?", "", mapBody("m1")),
+  page("Where did you get your PhD?", "", mapBody("m2", `<div class="box">Not yet / in progress</div>`)),
+  page("Where do you feel most at home?", "Publication venues of CiCS papers so far (larger = more CiCS papers). Add your favourite in an empty box.",
+    `<div class="cloud">${VENUES.map(([v, k]) => `<div style="font-size:${[0, 17, 25, 33][k]}pt">${esc(v)}</div>`).join("")}${
+      "<div class='blank'>other: …</div>".repeat(4)}</div>`),
+  page("Formal verification: which tools do you use?", "As many stickers as apply.",
+    cols(["Lean", "EasyCrypt", "Rocq (Coq)", "Isabelle", "Jasmin", "Formosa", "Other: …", "~Unfamiliar"]),
+    "Use the sticker colour of your institution. As many stickers as apply."),
+  page("AI: how often do you use AI for research?", "",
+    `<div class="chart"><div class="ylab">Career stage</div>
+      <div class="plot rows">${["PhD student", "Postdoc", "Faculty", "Other"].map(r => `<div style="border:0;border-bottom:0.4mm dashed #bbb"><b>${r}</b></div>`).join("")}</div>
+      <div class="xlab"><span>never</span><span>sometimes</span><span>always</span></div></div>`),
+  page("AI: which models do you use?", "As many stickers as apply.",
+    cols(["Claude", "ChatGPT", "Mistral", "Open-weight", "Self-trained", "Other: …"]),
+    "Use the sticker colour of your institution. As many stickers as apply."),
+  page("AI agents: how do you run them?", "Which permission mode do you usually give your coding or research agents?",
+    cols(["YOLO", "Auto", "Manual approval", "Sandbox", "~I don't use agents"])),
+  page("Are you worried about AI developments?", "",
+    `<div class="chart"><div class="ylab">Worried about existential risk →</div>
+      <div class="plot q4"><div class="tl"><span>existential risk only</span></div><div class="tr"><span>both</span></div>
+        <div class="bl"><span>not worried</span></div><div class="br"><span>job security only</span></div></div>
+      <div class="xlab"><span>not worried</span><span>Worried about job security →</span><span>very worried</span></div></div>`)
+].join("");
 document.getElementById("out").innerHTML = html;
+
+// Maps
+const W = "https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/";
+const SRI = { "countries-110m.json": "sha384-yOCJ+8ShBm8UDqtAVtAvxTDDf4gXo5edxl/YG0FmVC5OTmqVLl7utuVGBDEeZWHf",
+              "countries-50m.json": "sha384-Aw4s9pX1PTPntIYkZ/qV9IYiF5Gv8eTl6Dd/TT56zfO1Wwd+owFwYUuuXNUMrWkc" };
+const get = f => fetch(W + f, { integrity: SRI[f] }).then(r => r.json());
+Promise.all([get("countries-110m.json"), get("countries-50m.json")])
+  .then(([w110, w50]) => {
+    const world = topojson.feature(w110, w110.objects.countries);
+    const eur = topojson.feature(w50, w50.objects.countries);
+    const box = { type: "Feature", geometry: { type: "Polygon", coordinates: [[[-11, 35], [-11, 62], [32, 62], [32, 35], [-11, 35]].map(p => p) ] } };
+    const draw = (svg, fc, proj, frame) => {
+      const r = svg.getBoundingClientRect(), wd = r.width || 900, ht = r.height || 600;
+      svg.setAttribute("viewBox", `0 0 ${wd} ${ht}`);
+      const path = d3.geoPath(proj.fitExtent([[8, 8], [wd - 8, ht - 8]], frame || fc));
+      let s = `<path class="grat" d="${path(d3.geoGraticule10())}"/>`;
+      for (const f of fc.features) s += `<path class="land${f.properties.name === "Netherlands" ? " nl" : ""}" d="${path(f) || ""}"/>`;
+      if (!frame) s += `<path class="frame" d="${path(box)}"/>`;
+      svg.innerHTML = s;
+    };
+    for (const id of ["m1", "m2"]) {
+      draw(document.getElementById(id + "-w"), world, d3.geoNaturalEarth1());
+      draw(document.getElementById(id + "-e"), eur, d3.geoConicConformal().rotate([-10, 0]).parallels([40, 60]), box);
+    }
+    document.body.dataset.ready = "1";
+  });
 </script>
 </body>
 </html>
