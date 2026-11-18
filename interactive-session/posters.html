@@ -214,8 +214,8 @@ const html = [
     cross({ xName: "How often do you use AI tools (in general)?", yName: "How do you run AI agents?",
             xs: ["never", "rarely", "sometimes", "often", "always"],
             ys: ["no agents", "on a separate machine", "manual approval", "auto", "YOLO"] })),
-  page("Are you worried about AI developments?", "",
-    cross({ xName: "Worried about job security", yName: "Worried about existential risk",
+  page("Are you worried about AI developments?", "<b>Job security:</b> AI taking over (parts of) your job or making your skills less valuable. &nbsp; <b>Existential risk:</b> AI threatening humanity as a whole, e.g. through loss of control over very capable systems.",
+    cross({ xName: "Worried about your job security", yName: "Worried about existential risk for humanity",
             xs: ["not at all", "", "very"], ys: ["not at all", "", "very"],
             corners: ["existential risk only", "both", "neither", "job security only"] }))
 ].join("");

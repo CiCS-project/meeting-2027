@@ -22,7 +22,7 @@ Getting-to-know-each-other posters, based on Christian's hand-drawn sketch of 18
 | 6 | AI: how often do you use AI for research? | never → sometimes → always, one row per career stage (PhD student, postdoc, faculty, other) |
 | 7 | AI: which models do you use? | Claude, ChatGPT, Gemini, Mistral, open-weight, self-trained, other |
 | 8 | AI tools and agents: how much do you let them do? | 2-D, axes crossing in the middle: how often you use AI tools in general (never → always) against how you run agents (from bottom to top: no agents, on a separate machine, manual approval, auto, YOLO) |
-| 9 | Are you worried about AI developments? | 2-D, axes crossing in the middle: worry about job security (x) against worry about existential risk (y) |
+| 9 | Are you worried about AI developments? | 2-D, axes crossing in the middle: worry about your job security (x) against worry about existential risk for humanity (y), e.g. loss of control over very capable AI; both terms are explained on the poster |
 
 ## Notes
 
