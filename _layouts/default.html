@@ -10,7 +10,7 @@
 <body>
 <main>
 {{ content }}
-  <footer>{{ site.project }} (CiCS), an {{ site.project_note }} · {{ site.event.date | remove: "Wednesday, " }}</footer>
+  <footer>{{ site.project }} (CiCS), an <a href="{{ site.project_url }}">{{ site.project_note }}</a> · {{ site.event.date | remove: "Wednesday, " }}</footer>
 </main>
 </body>
 </html>
